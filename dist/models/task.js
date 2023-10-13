@@ -30,7 +30,10 @@ const taskSchema = new mongoose_1.Schema({
         required: true
     },
     description: String,
-    dueDate: Date,
+    dueDate: {
+        type: Date,
+        get: (date) => date.toISOString().split('T')[0]
+    },
     priority: {
         type: String,
         enum: ['low', 'medium', 'high'],
@@ -38,6 +41,7 @@ const taskSchema = new mongoose_1.Schema({
     },
     status: {
         type: String,
+        required: true,
         enum: ['todo', 'inProgress', 'completed'],
         default: 'todo'
     }

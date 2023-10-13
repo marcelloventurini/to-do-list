@@ -5,7 +5,7 @@ export interface ITask extends Document {
   description?: string
   dueDate?: Date
   priority?: string
-  status?: string
+  status: string
 }
 
 const taskSchema: Schema = new Schema({
@@ -14,7 +14,10 @@ const taskSchema: Schema = new Schema({
     required: true
   },
   description: String,
-  dueDate: Date,
+  dueDate: {
+    type: Date,
+    get: (date: Date) => date.toISOString().split('T')[0]
+  },
   priority: {
     type: String,
     enum: ['low', 'medium', 'high'],
@@ -22,6 +25,7 @@ const taskSchema: Schema = new Schema({
   },
   status: {
     type: String,
+    required: true,
     enum: ['todo', 'inProgress', 'completed'],
     default: 'todo'
   }
