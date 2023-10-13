@@ -25,5 +25,17 @@ class TaskController {
             }
         });
     }
+    static createTask(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const taskDetails = req.body;
+                const newTask = yield task_js_1.default.create(taskDetails);
+                res.status(200).json(newTask);
+            }
+            catch (error) {
+                res.status(500).json({ message: 'Failed to create new task.' });
+            }
+        });
+    }
 }
 exports.default = TaskController;

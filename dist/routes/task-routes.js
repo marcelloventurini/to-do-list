@@ -7,4 +7,5 @@ const express_1 = __importDefault(require("express"));
 const task_controller_1 = __importDefault(require("../controllers/task-controller"));
 const router = express_1.default.Router();
 router.get('/tasks', task_controller_1.default.getTasks);
+router.post('/tasks', task_controller_1.default.createTask);
 exports.default = router;
