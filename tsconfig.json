@@ -11,10 +11,11 @@
     /* Type Checking */
     "strict": true,
     "noImplicitAny": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
     "strictNullChecks": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noImplicitReturns": true,
     "allowUnreachableCode": false,
     /* Completeness */
     "skipLibCheck": true
