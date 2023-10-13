@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const db_connection_1 = __importDefault(require("./config/db-connection"));
 const dotenv_1 = __importDefault(require("dotenv"));
+const task_routes_js_1 = __importDefault(require("./routes/task-routes.js"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const port = 3000;
@@ -18,6 +19,7 @@ app.get('/', (_, res) => {
     res.status(200).send('Home');
 });
 app.use(express_1.default.json());
+app.use(express_1.default.json(), task_routes_js_1.default);
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
 });

@@ -1,6 +1,7 @@
 import express from 'express'
 import dbConnect from './config/db-connection'
 import dotenv from 'dotenv'
+import tasks from './routes/task-routes.js'
 
 dotenv.config()
 
@@ -19,6 +20,7 @@ app.get('/', (_, res) => {
 })
 
 app.use(express.json())
+app.use(express.json(), tasks)
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`)

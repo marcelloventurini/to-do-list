@@ -42,4 +42,4 @@ const taskSchema = new mongoose_1.Schema({
         default: 'todo'
     }
 });
-exports.default = mongoose_1.default.model('task', taskSchema);
+exports.default = mongoose_1.default.model('Task', taskSchema);
