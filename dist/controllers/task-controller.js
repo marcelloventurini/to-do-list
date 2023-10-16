@@ -13,12 +13,33 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const task_js_1 = __importDefault(require("../models/task.js"));
+const mongoose_1 = __importDefault(require("mongoose"));
 class TaskController {
     static getTasks(_, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const tasks = yield task_js_1.default.find();
                 res.status(200).json(tasks);
+            }
+            catch (error) {
+                res.status(500).json({ message: 'Failed to get tasks.' });
+            }
+        });
+    }
+    static getTaskById(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { id } = req.params;
+                if (!mongoose_1.default.Types.ObjectId.isValid(id)) {
+                    res.status(400).json({ message: 'Invalid ID format.' });
+                }
+                const task = yield task_js_1.default.findById(id);
+                if (!task) {
+                    res.status(404).json({ message: 'ID not found.' });
+                }
+                else {
+                    res.status(200).json(task);
+                }
             }
             catch (error) {
                 res.status(500).json({ message: 'Failed to get tasks.' });
@@ -34,6 +55,19 @@ class TaskController {
             }
             catch (error) {
                 res.status(500).json({ message: 'Failed to create new task.' });
+            }
+        });
+    }
+    static updateTask(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { id } = req.params;
+                const taskDetails = req.body;
+                const updatedTask = yield task_js_1.default.findByIdAndUpdate(id, taskDetails);
+                res.status(200).json(updatedTask);
+            }
+            catch (error) {
+                res.status(500).json({ message: 'Failed to update task.' });
             }
         });
     }
