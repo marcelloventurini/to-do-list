@@ -32,6 +32,7 @@ class TaskController {
                 const { id } = req.params;
                 if (!mongoose_1.default.Types.ObjectId.isValid(id)) {
                     res.status(400).json({ message: 'Invalid ID format.' });
+                    return;
                 }
                 const task = yield task_js_1.default.findById(id);
                 if (!task) {
@@ -62,9 +63,18 @@ class TaskController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { id } = req.params;
+                if (!mongoose_1.default.Types.ObjectId.isValid(id)) {
+                    res.status(400).json({ message: 'Invalid ID format.' });
+                    return;
+                }
                 const taskDetails = req.body;
-                const updatedTask = yield task_js_1.default.findByIdAndUpdate(id, taskDetails);
-                res.status(200).json(updatedTask);
+                const updatedTask = yield task_js_1.default.findByIdAndUpdate(id, taskDetails, { new: true });
+                if (!updatedTask) {
+                    res.status(404).json({ message: 'ID not found.' });
+                }
+                else {
+                    res.status(200).json({ message: 'Task successfully updated.', updatedTask });
+                }
             }
             catch (error) {
                 res.status(500).json({ message: 'Failed to update task.' });

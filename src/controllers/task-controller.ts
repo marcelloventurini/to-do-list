@@ -18,6 +18,7 @@ class TaskController {
 
       if (!mongoose.Types.ObjectId.isValid(id)) {
         res.status(400).json({ message: 'Invalid ID format.' })
+        return
       }
 
       const task = await Task.findById(id)
@@ -47,10 +48,21 @@ class TaskController {
   static async updateTask(req: Request, res: Response): Promise<void> {
     try {
       const { id } = req.params
-      const taskDetails: ITask = req.body
-      const updatedTask = await Task.findByIdAndUpdate(id, taskDetails)
 
-      res.status(200).json(updatedTask)
+      if (!mongoose.Types.ObjectId.isValid(id)) {
+        res.status(400).json({ message: 'Invalid ID format.' })
+        return
+      }
+
+      const taskDetails: ITask = req.body
+      const updatedTask = await Task.findByIdAndUpdate(id, taskDetails, { new: true })
+
+      if (!updatedTask) {
+        res.status(404).json({ message: 'ID not found.' })
+      } else {
+        res.status(200).json({ message: 'Task successfully updated.', updatedTask })
+      }
+
     } catch (error) {
       res.status(500).json({ message: 'Failed to update task.' })
     }
