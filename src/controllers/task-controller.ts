@@ -38,7 +38,7 @@ class TaskController {
       const taskDetails: ITask = req.body
       const newTask = await Task.create(taskDetails)
 
-      res.status(200).json(newTask)
+      res.status(200).json({ message: 'Task successfully created.', newTask })
     } catch (error) {
       res.status(500).json({ message: 'Failed to create new task.' })
     }

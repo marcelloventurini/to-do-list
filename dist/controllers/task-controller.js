@@ -51,7 +51,7 @@ class TaskController {
             try {
                 const taskDetails = req.body;
                 const newTask = yield task_js_1.default.create(taskDetails);
-                res.status(200).json(newTask);
+                res.status(200).json({ message: 'Task successfully created.', newTask });
             }
             catch (error) {
                 res.status(500).json({ message: 'Failed to create new task.' });
