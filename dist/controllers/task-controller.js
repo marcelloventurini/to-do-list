@@ -81,5 +81,26 @@ class TaskController {
             }
         });
     }
+    static deleteTask(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { id } = req.params;
+                if (!mongoose_1.default.Types.ObjectId.isValid(id)) {
+                    res.status(400).json({ message: 'Invalid ID format.' });
+                    return;
+                }
+                const deletedTask = yield task_js_1.default.findByIdAndDelete(id);
+                if (!deletedTask) {
+                    res.status(404).json({ message: 'ID not found.' });
+                }
+                else {
+                    res.status(200).json({ message: 'Task successfully deleted.' });
+                }
+            }
+            catch (error) {
+                res.status(500).json({ message: 'Failed to delete task.' });
+            }
+        });
+    }
 }
 exports.default = TaskController;

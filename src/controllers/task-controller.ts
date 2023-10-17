@@ -67,6 +67,28 @@ class TaskController {
       res.status(500).json({ message: 'Failed to update task.' })
     }
   }
+
+  static async deleteTask(req: Request, res: Response): Promise<void> {
+    try {
+      const { id } = req.params
+
+      if (!mongoose.Types.ObjectId.isValid(id)) {
+        res.status(400).json({ message: 'Invalid ID format.' })
+        return
+      }
+
+      const deletedTask = await Task.findByIdAndDelete(id)
+
+      if (!deletedTask) {
+        res.status(404).json({ message: 'ID not found.' })
+      } else {
+        res.status(200).json({ message: 'Task successfully deleted.' })
+      }
+
+    } catch (error) {
+      res.status(500).json({ message: 'Failed to delete task.' })
+    }
+  }
 }
 
 export default TaskController
