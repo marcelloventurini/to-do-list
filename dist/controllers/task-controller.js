@@ -102,5 +102,22 @@ class TaskController {
             }
         });
     }
+    static searchByTitle(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { title } = req.query;
+                const regex = new RegExp(title, 'i');
+                const task = yield task_js_1.default.find({ title: regex });
+                if (task.length === 0) {
+                    res.status(404).json({ message: 'Task not found.' });
+                    return;
+                }
+                res.status(200).json(task);
+            }
+            catch (error) {
+                res.status(500).json({ message: 'Failed to find task.' });
+            }
+        });
+    }
 }
 exports.default = TaskController;
