@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 import Task, { ITask } from '../models/task.js'
-import mongoose from 'mongoose'
+import mongoose, { FilterQuery } from 'mongoose'
 
 class TaskController {
   static async getTasks(_: Request, res: Response): Promise<void> {
@@ -90,18 +90,34 @@ class TaskController {
     }
   }
 
-  static async searchByTitle(req: Request, res: Response): Promise<void> {
+  static async search(req: Request, res: Response): Promise<void> {
     try {
       const { title } = req.query
       const regex = new RegExp(title as string, 'i')
-      const task = await Task.find({ title: regex })
+      const tasks = await Task.find({ title: regex })
 
-      if (task.length === 0) {
+      if (tasks.length === 0) {
         res.status(404).json({ message: 'Task not found.' })
         return
       }
 
-      res.status(200).json(task)
+      res.status(200).json(tasks)
+    } catch (error) {
+      res.status(500).json({ message: 'Failed to find task.' })
+    }
+  }
+
+  static async filter(req: Request, res: Response): Promise<void> {
+    try {
+      const { status, priority } = req.query
+      const search: FilterQuery<ITask> = {}
+
+      if (status) search.status = status
+      if (priority) search.priority = priority
+
+      const tasks = await Task.find(search)
+
+      res.status(200).json(tasks)
     } catch (error) {
       res.status(500).json({ message: 'Failed to find task.' })
     }
