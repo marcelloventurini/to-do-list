@@ -3,10 +3,20 @@ import Task, { ITask } from '../models/task.js'
 import mongoose, { FilterQuery } from 'mongoose'
 
 class TaskController {
-  static async getTasks(_: Request, res: Response): Promise<void> {
+  static async getTasks(req: Request, res: Response): Promise<void> {
     try {
-      const tasks = await Task.find()
-      res.status(200).json(tasks)
+      const { limit = 5, page = 1 } = req.query
+
+      if (Number(limit) > 0 && Number(page) > 0) {
+        const tasks = await Task.find()
+          .skip((Number(page) - 1) * Number(limit))
+          .limit(Number(limit))
+
+        res.status(200).json(tasks)
+      } else {
+        res.status(400).json({ message: 'Invalid format for page or limit.' })
+      }
+
     } catch (error) {
       res.status(500).json({ message: 'Failed to get tasks.' })
     }
@@ -39,7 +49,7 @@ class TaskController {
       const taskDetails: ITask = req.body
       const newTask = await Task.create(taskDetails)
 
-      res.status(200).json({ message: 'Task successfully created.', newTask })
+      res.status(201).json({ message: 'Task successfully created.', newTask })
     } catch (error) {
       res.status(500).json({ message: 'Failed to create new task.' })
     }
@@ -93,6 +103,7 @@ class TaskController {
   static async search(req: Request, res: Response): Promise<void> {
     try {
       const { title } = req.query
+
       const regex = new RegExp(title as string, 'i')
       const tasks = await Task.find({ title: regex })
 

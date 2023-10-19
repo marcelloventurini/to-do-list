@@ -15,11 +15,19 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const task_js_1 = __importDefault(require("../models/task.js"));
 const mongoose_1 = __importDefault(require("mongoose"));
 class TaskController {
-    static getTasks(_, res) {
+    static getTasks(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const tasks = yield task_js_1.default.find();
-                res.status(200).json(tasks);
+                const { limit = 5, page = 1 } = req.query;
+                if (Number(limit) > 0 && Number(page) > 0) {
+                    const tasks = yield task_js_1.default.find()
+                        .skip((Number(page) - 1) * Number(limit))
+                        .limit(Number(limit));
+                    res.status(200).json(tasks);
+                }
+                else {
+                    res.status(400).json({ message: 'Invalid format for page or limit.' });
+                }
             }
             catch (error) {
                 res.status(500).json({ message: 'Failed to get tasks.' });
@@ -52,7 +60,7 @@ class TaskController {
             try {
                 const taskDetails = req.body;
                 const newTask = yield task_js_1.default.create(taskDetails);
-                res.status(200).json({ message: 'Task successfully created.', newTask });
+                res.status(201).json({ message: 'Task successfully created.', newTask });
             }
             catch (error) {
                 res.status(500).json({ message: 'Failed to create new task.' });
