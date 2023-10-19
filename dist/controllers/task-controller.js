@@ -114,6 +114,10 @@ class TaskController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { title } = req.query;
+                if (!title || title.toString().trim() === '') {
+                    res.status(400).json({ message: 'Title parameter is missing or empty.' });
+                    return;
+                }
                 const regex = new RegExp(title, 'i');
                 const tasks = yield task_js_1.default.find({ title: regex });
                 if (tasks.length === 0) {

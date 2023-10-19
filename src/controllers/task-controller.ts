@@ -104,6 +104,11 @@ class TaskController {
     try {
       const { title } = req.query
 
+      if (!title || title.toString().trim() === '') {
+        res.status(400).json({ message: 'Title parameter is missing or empty.' })
+        return
+      }
+
       const regex = new RegExp(title as string, 'i')
       const tasks = await Task.find({ title: regex })
 
