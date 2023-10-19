@@ -137,6 +137,10 @@ class TaskController {
                 if (priority)
                     search.priority = priority;
                 const tasks = yield task_js_1.default.find(search);
+                if (tasks.length === 0) {
+                    res.status(404).json({ message: 'No task matches the filter.' });
+                    return;
+                }
                 res.status(200).json(tasks);
             }
             catch (error) {

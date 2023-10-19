@@ -128,6 +128,11 @@ class TaskController {
 
       const tasks = await Task.find(search)
 
+      if (tasks.length === 0) {
+        res.status(404).json({ message: 'No task matches the filter.' })
+        return
+      }
+
       res.status(200).json(tasks)
     } catch (error) {
       res.status(500).json({ message: 'Failed to find task.' })
