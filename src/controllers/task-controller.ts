@@ -104,7 +104,7 @@ class TaskController {
     try {
       const { title } = req.query
 
-      if (!title || title.toString().trim() === '') {
+      if (!title) {
         res.status(400).json({ message: 'Title parameter is missing or empty.' })
         return
       }
@@ -130,6 +130,13 @@ class TaskController {
 
       if (status) search.status = status
       if (priority) search.priority = priority
+
+      if (!status && !priority) {
+        res.status(400).json({
+          message: 'Please provide at least one filter parameter (status or priority).'
+        })
+        return
+      }
 
       const tasks = await Task.find(search)
 

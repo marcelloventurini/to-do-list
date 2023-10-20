@@ -114,7 +114,7 @@ class TaskController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { title } = req.query;
-                if (!title || title.toString().trim() === '') {
+                if (!title) {
                     res.status(400).json({ message: 'Title parameter is missing or empty.' });
                     return;
                 }
@@ -140,6 +140,12 @@ class TaskController {
                     search.status = status;
                 if (priority)
                     search.priority = priority;
+                if (!status && !priority) {
+                    res.status(400).json({
+                        message: 'Please provide at least one filter parameter (status or priority).'
+                    });
+                    return;
+                }
                 const tasks = yield task_js_1.default.find(search);
                 if (tasks.length === 0) {
                     res.status(404).json({ message: 'No task matches the filter.' });
