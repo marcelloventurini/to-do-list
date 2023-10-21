@@ -15,27 +15,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const task_js_1 = __importDefault(require("../models/task.js"));
 const mongoose_1 = __importDefault(require("mongoose"));
 class TaskController {
-    static getTasks(req, res) {
+    static getTasks(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const { limit = 5, page = 1, sortField = '_id', order = -1 } = req.query;
-                if (Number(limit) > 0 && Number(page) > 0) {
-                    // cria um obj com uma anotação de tipo;
-                    // essa anotação indica que o obj terá uma chave (o campo de ordenação),
-                    // que será do tipo string, e um valor (a ordem de ordenação)
-                    // que pode ser apenas 'asc' ou 'desc'
-                    const sortOptions = {
-                        [sortField]: order === -1 ? 'desc' : 'asc'
-                    };
-                    const tasks = yield task_js_1.default.find()
-                        .sort(sortOptions)
-                        .skip((Number(page) - 1) * Number(limit))
-                        .limit(Number(limit));
-                    res.status(200).json(tasks);
-                }
-                else {
-                    res.status(400).json({ message: 'Invalid format for page or limit.' });
-                }
+                const tasks = task_js_1.default.find();
+                req.result = tasks;
+                next();
             }
             catch (error) {
                 res.status(500).json({ message: 'Failed to get tasks.' });

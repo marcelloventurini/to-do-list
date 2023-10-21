@@ -1,9 +1,10 @@
 import express from 'express'
 import TaskController from '../controllers/task-controller'
+import paginate from '../middlewares/paginate'
 
 const router = express.Router()
 
-router.get('/tasks', TaskController.getTasks)
+router.get('/tasks', TaskController.getTasks, paginate)
 router.get('/tasks/search', TaskController.search)
 router.get('/tasks/filter', TaskController.filter)
 router.get('/tasks/:id', TaskController.getTaskById)

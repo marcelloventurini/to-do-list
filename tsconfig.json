@@ -2,6 +2,7 @@
   "compilerOptions": {
     /* Language and Environment */
     "target": "ES6",
+    "typeRoots": ["./typings"],
     /* Modules */
     "module": "NodeNext",
     "rootDir": "./src",
