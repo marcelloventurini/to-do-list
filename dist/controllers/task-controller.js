@@ -23,7 +23,7 @@ class TaskController {
                 next();
             }
             catch (error) {
-                res.status(500).json({ message: 'Failed to get tasks.' });
+                res.status(500).json({ message: 'Failed to get tasks.', error });
             }
         });
     }
@@ -44,7 +44,7 @@ class TaskController {
                 }
             }
             catch (error) {
-                res.status(500).json({ message: 'Failed to get tasks.' });
+                res.status(500).json({ message: 'Failed to get tasks.', error });
             }
         });
     }
@@ -56,7 +56,7 @@ class TaskController {
                 res.status(201).json({ message: 'Task successfully created.', newTask });
             }
             catch (error) {
-                res.status(500).json({ message: 'Failed to create new task.' });
+                res.status(500).json({ message: 'Failed to create new task.', error });
             }
         });
     }
@@ -78,7 +78,7 @@ class TaskController {
                 }
             }
             catch (error) {
-                res.status(500).json({ message: 'Failed to update task.' });
+                res.status(500).json({ message: 'Failed to update task.', error });
             }
         });
     }
@@ -99,7 +99,7 @@ class TaskController {
                 }
             }
             catch (error) {
-                res.status(500).json({ message: 'Failed to delete task.' });
+                res.status(500).json({ message: 'Failed to delete task.', error });
             }
         });
     }
@@ -117,7 +117,7 @@ class TaskController {
                 next();
             }
             catch (error) {
-                res.status(500).json({ message: 'Failed to find task.' });
+                res.status(500).json({ message: 'Failed to find task.', error });
             }
         });
     }
@@ -141,7 +141,7 @@ class TaskController {
                 next();
             }
             catch (error) {
-                res.status(500).json({ message: 'Failed to find task.' });
+                res.status(500).json({ message: 'Failed to find task.', error });
             }
         });
     }
