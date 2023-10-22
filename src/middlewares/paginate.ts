@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 
 async function paginate(req: Request, res: Response) {
   try {
-    const { limit = 5, page = 1, sortField = '_id', order = -1 } = req.query
+    const { limit = 3, page = 1, sortField = '_id', order = -1 } = req.query
     const result = req.result
 
     if (Number(limit) > 0 && Number(page) > 0) {
@@ -18,6 +18,11 @@ async function paginate(req: Request, res: Response) {
         .sort(sortOptions)
         .skip((Number(page) - 1) * Number(limit))
         .limit(Number(limit))
+
+      if (tasks.length === 0) {
+        res.status(404).json({message: 'No task found.'})
+        return
+      }
 
       res.status(200).json(tasks)
     } else {

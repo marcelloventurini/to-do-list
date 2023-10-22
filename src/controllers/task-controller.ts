@@ -91,7 +91,7 @@ class TaskController {
     }
   }
 
-  static async search(req: Request, res: Response): Promise<void> {
+  static async search(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const { title } = req.query
 
@@ -101,20 +101,15 @@ class TaskController {
       }
 
       const regex = new RegExp(title as string, 'i')
-      const tasks = await Task.find({ title: regex })
-
-      if (tasks.length === 0) {
-        res.status(404).json({ message: 'Task not found.' })
-        return
-      }
-
-      res.status(200).json(tasks)
+      const tasks = Task.find({ title: regex })
+      req.result = tasks
+      next()
     } catch (error) {
       res.status(500).json({ message: 'Failed to find task.' })
     }
   }
 
-  static async filter(req: Request, res: Response): Promise<void> {
+  static async filter(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const { status, priority } = req.query
       const search: FilterQuery<ITask> = {}
@@ -129,14 +124,9 @@ class TaskController {
         return
       }
 
-      const tasks = await Task.find(search)
-
-      if (tasks.length === 0) {
-        res.status(404).json({ message: 'No task matches the filter.' })
-        return
-      }
-
-      res.status(200).json(tasks)
+      const tasks = Task.find(search)
+      req.result = tasks
+      next()
     } catch (error) {
       res.status(500).json({ message: 'Failed to find task.' })
     }

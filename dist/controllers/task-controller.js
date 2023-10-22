@@ -103,7 +103,7 @@ class TaskController {
             }
         });
     }
-    static search(req, res) {
+    static search(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { title } = req.query;
@@ -112,19 +112,16 @@ class TaskController {
                     return;
                 }
                 const regex = new RegExp(title, 'i');
-                const tasks = yield task_js_1.default.find({ title: regex });
-                if (tasks.length === 0) {
-                    res.status(404).json({ message: 'Task not found.' });
-                    return;
-                }
-                res.status(200).json(tasks);
+                const tasks = task_js_1.default.find({ title: regex });
+                req.result = tasks;
+                next();
             }
             catch (error) {
                 res.status(500).json({ message: 'Failed to find task.' });
             }
         });
     }
-    static filter(req, res) {
+    static filter(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { status, priority } = req.query;
@@ -139,12 +136,9 @@ class TaskController {
                     });
                     return;
                 }
-                const tasks = yield task_js_1.default.find(search);
-                if (tasks.length === 0) {
-                    res.status(404).json({ message: 'No task matches the filter.' });
-                    return;
-                }
-                res.status(200).json(tasks);
+                const tasks = task_js_1.default.find(search);
+                req.result = tasks;
+                next();
             }
             catch (error) {
                 res.status(500).json({ message: 'Failed to find task.' });

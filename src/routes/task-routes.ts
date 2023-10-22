@@ -5,8 +5,8 @@ import paginate from '../middlewares/paginate'
 const router = express.Router()
 
 router.get('/tasks', TaskController.getTasks, paginate)
-router.get('/tasks/search', TaskController.search)
-router.get('/tasks/filter', TaskController.filter)
+router.get('/tasks/search', TaskController.search, paginate)
+router.get('/tasks/filter', TaskController.filter, paginate)
 router.get('/tasks/:id', TaskController.getTaskById)
 router.post('/tasks', TaskController.createTask)
 router.put('/tasks/:id', TaskController.updateTask)
