@@ -15,10 +15,6 @@ function paginate(req, res) {
             const { limit = 3, page = 1, sortField = '_id', order = -1 } = req.query;
             const result = req.result;
             if (Number(limit) > 0 && Number(page) > 0) {
-                // cria um obj com uma anotação de tipo;
-                // essa anotação indica que o obj terá uma chave (o campo de ordenação),
-                // que será do tipo string, e um valor (a ordem de ordenação)
-                // que pode ser apenas 'asc' ou 'desc'
                 const sortOptions = {
                     [sortField]: order == -1 ? 'desc' : 'asc'
                 };
