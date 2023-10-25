@@ -11,7 +11,7 @@ async function paginate(req: Request, res: Response) {
       // que será do tipo string, e um valor (a ordem de ordenação)
       // que pode ser apenas 'asc' ou 'desc'
       const sortOptions: { [key: string]: 'asc' | 'desc' } = {
-        [sortField as string]: order === -1 ? 'desc' : 'asc'
+        [sortField as string]: order == -1 ? 'desc' : 'asc'
       }
 
       const tasks = await result.find()

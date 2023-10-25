@@ -20,7 +20,7 @@ function paginate(req, res) {
                 // que será do tipo string, e um valor (a ordem de ordenação)
                 // que pode ser apenas 'asc' ou 'desc'
                 const sortOptions = {
-                    [sortField]: order === -1 ? 'desc' : 'asc'
+                    [sortField]: order == -1 ? 'desc' : 'asc'
                 };
                 const tasks = yield result.find()
                     .sort(sortOptions)
