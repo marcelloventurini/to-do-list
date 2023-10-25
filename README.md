@@ -32,10 +32,10 @@ With that done, we can move on to the project itself.
 
 The routes:
 
-The server will be running at: http://localhost:3000
-The base endpoint is: http://localhost:3000/tasks
-For the search tests, the endpoint is: http://localhost:3000/tasks/search
-For the filter tests, the endpoint is: http://localhost:3000/tasks/filter
+* The server will be running at: http://localhost:3000
+* The base endpoint is: http://localhost:3000/tasks
+* For the search tests, the endpoint is: http://localhost:3000/tasks/search
+* For the filter tests, the endpoint is: http://localhost:3000/tasks/filter
 
 All endpoints have a pagination option
 
