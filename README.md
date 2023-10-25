@@ -32,18 +32,16 @@ With that done, we can move on to the project itself.
 
 The routes:
 
-* The server will be running at: http://localhost:3000
-* The base endpoint is: http://localhost:3000/tasks
-* For the search tests, the endpoint is: http://localhost:3000/tasks/search
-* For the filter tests, the endpoint is: http://localhost:3000/tasks/filter
+* the server will be running at: http://localhost:3000
+* the base endpoint is: http://localhost:3000/tasks
+* for the search tests, the endpoint is: http://localhost:3000/tasks/search
+* for the filter tests, the endpoint is: http://localhost:3000/tasks/filter
 
 All endpoints have a pagination option
 
 Some observations:
 
-The search method accepts only the title as a parameter
-The filter method accepts status, priority, or both
-Pagination parameters are:
+the search method accepts only the title as a parameter; the filter method accepts status, priority, or both; pagination parameters are:
 * limit: how many objects will be returned per page
 * page: the page you want to access
 * sortField: which field to sort by
