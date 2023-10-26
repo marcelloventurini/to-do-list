@@ -49,12 +49,12 @@ the search method accepts only the title as a parameter; the filter method accep
 
 Here are some test examples:
 
-`localhost:3000/tasks/search?title=some title`
-`localhost:3000/tasks/filter?status=todo`
-`localhost:3000/tasks/filter?status=todo&priority=high`
-`localhost:3000/tasks?limit=5`
-`localhost:3000/tasks?limit=5&order=1`
-`localhost:3000/tasks?sortField=title&order=1`
+* `localhost:3000/tasks/search?title=some title`
+* `localhost:3000/tasks/filter?status=todo`
+* `localhost:3000/tasks/filter?status=todo&priority=high`
+* `localhost:3000/tasks?limit=5`
+* `localhost:3000/tasks?limit=5&order=1`
+* `localhost:3000/tasks?sortField=title&order=1`
 
 This is how a task object looks like:
 
